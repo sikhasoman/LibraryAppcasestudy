@@ -1,13 +1,14 @@
 const express = require('express'); 
 const path = require ('path'); 
 const cors = require('cors');//import cors
+var port = process.env.PORT ||5000;
 const bodyParser = require("body-parser");//import body-parser
 
 const nav= [
     {
         link:"/books",
         title:"Books"
-    },
+    }, 
     {
         link:"/authors",
         title:"Authors"
@@ -34,7 +35,9 @@ const app = new express;
 app.set('views','./src/views'); 
 app.set('view engine','ejs'); 
 
-app.use(cors());//use of cors
+app.use(cors({
+    origin:'http://localhost:5000'
+}));//use of cors
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json());
 app.use(express.static(path.join(__dirname , '/public'))); 
@@ -57,6 +60,6 @@ app.get('/',function(req,res){
 
 
 
-app.listen(5000,()=>{
+app.listen(port,()=>{
     console.log("Server Ready on 5000");
 });
